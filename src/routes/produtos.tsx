@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import html from "../legacy-site/produtos.html?raw";
-import { htmlResponse } from "../lib/legacy-html";
+import { htmlResponse, withHashSync } from "../lib/legacy-html";
 
 export const Route = createFileRoute("/produtos")({
   server: {
     handlers: {
-      GET: () => htmlResponse(html),
+      GET: () => htmlResponse(withHashSync(html)),
     },
   },
 });
