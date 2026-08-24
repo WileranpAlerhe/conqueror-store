@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import html from "../legacy-site/index.html?raw";
+import html from "../legacy-site/produtos.html?raw";
 import { htmlResponse } from "../lib/legacy-html";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/produtos")({
   server: {
     handlers: {
       GET: () => htmlResponse(html),
