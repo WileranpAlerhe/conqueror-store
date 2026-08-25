@@ -5,24 +5,23 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { products } from "@/data/products";
 
 type Search = {
-  categoria?: "importado" | "premium" | "promocao";
-  genero?: "masculino" | "feminino" | "unissex";
-  busca?: string;
-  ordem?: "relevancia" | "menor" | "maior" | "desconto";
+  categoria?: "importado" | "premium" | "promocao" | undefined;
+  genero?: "masculino" | "feminino" | "unissex" | undefined;
+  busca?: string | undefined;
+  ordem?: "relevancia" | "menor" | "maior" | "desconto" | undefined;
 };
+
+const pick = <T extends string>(value: unknown, allowed: readonly T[]): T | undefined =>
+  typeof value === "string" && (allowed as readonly string[]).includes(value)
+    ? (value as T)
+    : undefined;
 
 export const Route = createFileRoute("/produtos")({
   validateSearch: (search: Record<string, unknown>): Search => ({
-    categoria: ["importado", "premium", "promocao"].includes(String(search.categoria))
-      ? (search.categoria as Search["categoria"])
-      : undefined,
-    genero: ["masculino", "feminino", "unissex"].includes(String(search.genero))
-      ? (search.genero as Search["genero"])
-      : undefined,
-    busca: typeof search.busca === "string" && search.busca ? search.busca : undefined,
-    ordem: ["relevancia", "menor", "maior", "desconto"].includes(String(search.ordem))
-      ? (search.ordem as Search["ordem"])
-      : undefined,
+    categoria: pick(search["categoria"], ["importado", "premium", "promocao"] as const),
+    genero: pick(search["genero"], ["masculino", "feminino", "unissex"] as const),
+    busca: typeof search["busca"] === "string" && search["busca"] ? search["busca"] : undefined,
+    ordem: pick(search["ordem"], ["relevancia", "menor", "maior", "desconto"] as const),
   }),
   head: () => ({
     meta: [
