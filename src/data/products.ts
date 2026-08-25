@@ -2,7 +2,6 @@
 export type Review = {
   name: string;
   city: string;
-  bestseller?: boolean;
   rating: number;
   date: string;
   title: string;
@@ -27,6 +26,7 @@ export type Product = {
   sizes: string[];
   sizePrices: Record<string, { price: number; oldPrice: number }>;
   description: string;
+  bestseller?: boolean;
   rating: number;
   reviews: number;
   reviewsList: Review[];
