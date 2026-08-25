@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
@@ -29,6 +30,11 @@ const SplatRoute = SplatRouteImport.update({
 const CarrinhoRoute = CarrinhoRouteImport.update({
   id: '/carrinho',
   path: '/carrinho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ObrigadoRoute = ObrigadoRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/carrinho': typeof CarrinhoRoute
+  '/checkout': typeof CheckoutRoute
   '/obrigado': typeof ObrigadoRoute
   '/produtos': typeof ProdutosRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/carrinho': typeof CarrinhoRoute
+  '/checkout': typeof CheckoutRoute
   '/obrigado': typeof ObrigadoRoute
   '/produtos': typeof ProdutosRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/carrinho': typeof CarrinhoRoute
+  '/checkout': typeof CheckoutRoute
   '/obrigado': typeof ObrigadoRoute
   '/produtos': typeof ProdutosRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -75,14 +84,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$' | '/carrinho' | '/obrigado' | '/produtos' | '/produto/$slug'
+    | '/'
+    | '/$'
+    | '/carrinho'
+    | '/checkout'
+    | '/obrigado'
+    | '/produtos'
+    | '/produto/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/carrinho' | '/obrigado' | '/produtos' | '/produto/$slug'
+  to:
+    | '/'
+    | '/$'
+    | '/carrinho'
+    | '/checkout'
+    | '/obrigado'
+    | '/produtos'
+    | '/produto/$slug'
   id:
     | '__root__'
     | '/'
     | '/$'
     | '/carrinho'
+    | '/checkout'
     | '/obrigado'
     | '/produtos'
     | '/produto/$slug'
@@ -92,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   CarrinhoRoute: typeof CarrinhoRoute
+  CheckoutRoute: typeof CheckoutRoute
   ObrigadoRoute: typeof ObrigadoRoute
   ProdutosRoute: typeof ProdutosRoute
   ProdutoSlugRoute: typeof ProdutoSlugRoute
@@ -118,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/carrinho'
       fullPath: '/carrinho'
       preLoaderRoute: typeof CarrinhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/obrigado': {
@@ -148,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   CarrinhoRoute: CarrinhoRoute,
+  CheckoutRoute: CheckoutRoute,
   ObrigadoRoute: ObrigadoRoute,
   ProdutosRoute: ProdutosRoute,
   ProdutoSlugRoute: ProdutoSlugRoute,
