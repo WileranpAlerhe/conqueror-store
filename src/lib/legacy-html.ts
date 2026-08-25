@@ -10,7 +10,7 @@ export function htmlResponse(html: string) {
  * current path into the hash before the module entry runs, so deep links land
  * on the right screen while the pre-rendered markup stays intact for crawlers.
  */
-const HASH_SYNC = `<script>(function(){try{if(!location.hash){var p=location.pathname+location.search;if(p&&p!=="/"){history.replaceState(null,"",p+"#"+p);}}}catch(e){}})();</script>`;
+const HASH_SYNC = `<script>(function(){try{if(!location.hash){var p=location.pathname;if(p&&p!=="/"){history.replaceState(null,"",p+location.search+"#"+p);}}}catch(e){}})();</script>`;
 
 export function withHashSync(html: string) {
   return html.replace("<body>", `<body>${HASH_SYNC}`);
